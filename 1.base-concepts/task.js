@@ -1,3 +1,4 @@
+//FIRST_TASK//
 "use strict";
 
 function solveEquation(a, b, c) {
@@ -33,7 +34,7 @@ console.log(solveEquation(1, -3, 2));  // [-1, 2]
 console.log(solveEquation(1, 2, 1));   // [-1]
 console.log(solveEquation(1, 1, 1));   // []
 
-
+//SECOND TASK//
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
     // Преобразуем годовую процентную ставку в месячную и переводим её в десятичный формат
     const monthlyRate = (percent / 100) / 12;
