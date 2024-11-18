@@ -1,27 +1,34 @@
 "use strict";
 
 function solveEquation(a, b, c) {
-    // Проверка, что a не равно нулю (иначе это линейное уравнение)
+    // Проверяем, является ли уравнение квадратным (коэффициент a не должен быть равным нулю)
     if (a === 0) {
         throw new Error("Коэффициент 'a' не может быть нулем.");
     }
-    
-    let discriminant = b ** 2 - 4 * a * c;
-    
+
+    // Вычисляем дискриминант
+    const discriminant = b ** 2 - 4 * a * c;
+
+    // Определяем количество корней в зависимости от значения дискриминанта
     if (discriminant < 0) {
+        // Дискриминант меньше нуля - корней нет
         return [];
     } else if (discriminant === 0) {
-        let root = -b / (2 * a);
+        // Один корень
+        const root = -b / (2 * a);
         return [root];
     } else {
-        let sqrtD = Math.sqrt(discriminant);
-        let x1 = (-b + sqrtD) / (2 * a);
-        let x2 = (-b - sqrtD) / (2 * a);
-        
-        return [x1, x2].sort((a, b) => a - b); // Сортируем корни по возрастанию
+        // Два корня
+        const sqrtD = Math.sqrt(discriminant);
+        const x1 = (-b + sqrtD) / (2 * a);
+        const x2 = (-b - sqrtD) / (2 * a);
+
+        // Сортируем корни по возрастанию
+        return [x1, x2].sort((a, b) => a - b);
     }
 }
 
-// Пример использования функции
-let result = solveEquation(1, -3, 2);
-console.log(result); // [-1, 2]
+// Примеры использования функции
+console.log(solveEquation(1, -3, 2));  // [-1, 2]
+console.log(solveEquation(1, 2, 1));   // [-1]
+console.log(solveEquation(1, 1, 1));   // []
