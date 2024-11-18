@@ -23,8 +23,8 @@ function solveEquation(a, b, c) {
         const x1 = (-b + sqrtD) / (2 * a);
         const x2 = (-b - sqrtD) / (2 * a);
 
-        // Сортируем корни по возрастанию
-        return [x1, x2].sort((a, b) => a - b);
+        // Возращаем оба корня без сортировки
+        return [x1, x2];
     }
 }
 
