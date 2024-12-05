@@ -3,119 +3,112 @@
 // Базовый класс PrintEditionItem
 class PrintEditionItem {
     constructor(name, releaseDate, pagesCount) {
-      this.name = name;
-      this.releaseDate = releaseDate;
-      this.pagesCount = pagesCount;
-      this.state = 100; // по умолчанию состояние 100
-      this.type = null; // тип по умолчанию null
+        this._name = name;
+        this._releaseDate = releaseDate;
+        this._pagesCount = pagesCount;
+        this._state = 100;
+        this.type = null;
     }
-  
-    // Метод fix, который улучшает состояние на 50%
-    fix() {
-      if (this.state < 100) {
-        this.state = Math.min(this.state * 1.5, 100); // увеличиваем состояние в 1.5 раза, но не больше 100
-      }
+
+    get name() {
+        return this._name;
     }
-  
-    // Сеттер для состояния
-    set state(value) {
-      if (value < 0) {
-        this._state = 0; // если меньше 0, записываем 0
-      } else if (value > 100) {
-        this._state = 100; // если больше 100, записываем 100
-      } else {
-        this._state = value; // иначе записываем значение
-      }
+
+    get releaseDate() {
+        return this._releaseDate;
     }
-  
-    // Геттер для состояния
+
+    get pagesCount() {
+        return this._pagesCount;
+    }
+
     get state() {
-      return this._state;
+        return this._state;
     }
-  }
-  
-  // Класс Magazine (журнал) наследует от PrintEditionItem
-  class Magazine extends PrintEditionItem {
+
+    set state(newState) {
+        if (newState < 0) {
+            this._state = 0;
+        } else if (newState > 100) {
+            this._state = 100;
+        } else {
+            this._state = newState;
+        }
+    }
+
+    fix() {
+        this._state *= 1.5;
+        if (this._state > 100) {
+            this._state = 100;
+        }
+    }
+}
+class Magazine extends PrintEditionItem {
     constructor(name, releaseDate, pagesCount) {
-      super(name, releaseDate, pagesCount);
-      this.type = "magazine"; // тип издания — журнал
+        super(name, releaseDate, pagesCount);
+        this.type = "magazine";
     }
-  }
-  
-  // Класс Book (книга) наследует от PrintEditionItem
-class Book {
-    constructor(author, title, yearOfPublication, numberOfPages) {
-        this.author = author;
-        this.title = title;
-        this.yearOfPublication = yearOfPublication;
-        this.numberOfPages = numberOfPages;
+}
+class Book extends PrintEditionItem {
+    constructor(author, name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount);
+        this._author = author;
+        this.type = "book";
+    }
+
+    get author() {
+        return this._author;
+    }
+}
+class NovelBook extends Book {
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = "novel";
     }
 }
 
-class NovelBook extends Book {}
-class FantasticBook extends Book {}
-class DetectiveBook extends Book {}
-// Создание объекта Book
-const book = new Book('А. Сапковский', 'Меч Предназначения', 1992, 384);
+class FantasticBook extends Book {
+    constructor(author, name, releaseDate, pagesCount) {
+        super(author, name, releaseDate, pagesCount);
+        this.type = "fantastic";
+    }
+}
 
-// Проверка свойств объекта
-expect(book.author).toEqual('А. Сапковский');
-expect(book.title).toEqual('Меч Предназначения');
-expect(book.yearOfPublication).toEqual(1992);
-expect(book.numberOfPages).toEqual(384);
-  
-  // Класс NovelBook (роман) наследует от Book
-  class NovelBook extends Book {
+class DetectiveBook extends Book {
     constructor(author, name, releaseDate, pagesCount) {
-      super(name, releaseDate, pagesCount, author);
-      this.type = "novel"; // тип издания — роман
+        super(author, name, releaseDate, pagesCount);
+        this.type = "detective";
     }
-  }
-  
-  // Класс FantasticBook (фантастика) наследует от Book
-  class FantasticBook extends Book {
-    constructor(author, name, releaseDate, pagesCount) {
-      super(name, releaseDate, pagesCount, author);
-      this.type = "fantastic"; // тип издания — фантастика
-    }
-  }
-  
-  // Класс DetectiveBook (детектив) наследует от Book
-  class DetectiveBook extends Book {
-    constructor(author, name, releaseDate, pagesCount) {
-      super(name, releaseDate, pagesCount, author);
-      this.type = "detective"; // тип издания — детектив
-    }
-  }
-  
-  // Пример использования:
-  
-  const sherlock = new PrintEditionItem(
+}
+// Пример использования базового класса
+const sherlock = new PrintEditionItem(
     "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
     2019,
     1008
-  );
-  console.log(sherlock.releaseDate); // 2019
-  console.log(sherlock.state); // 100
-  sherlock.fix();
-  console.log(sherlock.state); // 100 (не изменилось, так как состояние уже на максимуме)
-  
-  const picknick = new FantasticBook(
+);
+
+console.log(sherlock.releaseDate); // 2019
+console.log(sherlock.state);       // 100
+sherlock.fix();
+console.log(sherlock.state);       // 150 (переведено в 100, так как нельзя превышать 100%)
+
+// Пример использования класса Magazine
+const murzilka = new Magazine("Мурзилка", 1924, 60);
+console.log(murzilka.type);        // magazine
+
+// Пример использования класса FantasticBook
+const picknick = new FantasticBook(
     "Аркадий и Борис Стругацкие",
     "Пикник на обочине",
     1972,
     168
-  );
-  console.log(picknick.author); // "Аркадий и Борис Стругацкие"
-  picknick.state = 10;
-  console.log(picknick.state); // 10
-  picknick.fix();
-  console.log(picknick.state); // 15 (состояние увеличено на 50%)
-  
-  const magazine = new Magazine("Tech Weekly", 2023, 100);
-  console.log(magazine.type); // "magazine"
-  
-  
+);
+
+console.log(picknick.author);      // Аркадий и Борис Стругацкие
+picknick.state = 10;
+console.log(picknick.state);       // 10
+picknick.fix();
+console.log(picknick.state);       // 15
   //TASK SECOND
 
  
