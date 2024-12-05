@@ -43,13 +43,23 @@ class PrintEditionItem {
   }
   
   // Класс Book (книга) наследует от PrintEditionItem
-  class Book extends PrintEditionItem {
-    constructor(name, releaseDate, pagesCount, author) {
-      super(name, releaseDate, pagesCount);
-      this.author = author; // свойство для имени автора
-      this.type = "book"; // тип издания — книга
+  class Book {
+    constructor(author, title, yearOfPublication, numberOfPages) {
+        this.author = author;
+        this.title = title;
+        this.yearOfPublication = yearOfPublication;
+        this.numberOfPages = numberOfPages;
     }
-  }
+}
+
+// Создание объекта Book
+const book = new Book('А. Сапковский', 'Меч Предназначения', 1992, 384);
+
+// Проверка свойств объекта
+expect(book.author).toEqual('А. Сапковский');
+expect(book.title).toEqual('Меч Предназначения');
+expect(book.yearOfPublication).toEqual(1992);
+expect(book.numberOfPages).toEqual(384);
   
   // Класс NovelBook (роман) наследует от Book
   class NovelBook extends Book {
