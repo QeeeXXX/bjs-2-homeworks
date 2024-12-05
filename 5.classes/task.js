@@ -43,7 +43,7 @@ class PrintEditionItem {
   }
   
   // Класс Book (книга) наследует от PrintEditionItem
- class Book {
+class Book {
     constructor(author, title, yearOfPublication, numberOfPages) {
         this.author = author;
         this.title = title;
@@ -51,6 +51,10 @@ class PrintEditionItem {
         this.numberOfPages = numberOfPages;
     }
 }
+
+class NovelBook extends Book {}
+class FantasticBook extends Book {}
+class DetectiveBook extends Book {}
 // Создание объекта Book
 const book = new Book('А. Сапковский', 'Меч Предназначения', 1992, 384);
 
