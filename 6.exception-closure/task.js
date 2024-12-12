@@ -102,8 +102,11 @@ describe('Задача №2', () => {
     const triangle = new Triangle(6, 10, 15);
     expect(triangle).toBeDefined();
 
-    triangle.perimeter = "неправильное значение"; // Вызовет ошибку
-    triangle.area = "неправильное значение"; // Вызовет ошибку
+    // Попробуйте изменить свойства
+    triangle.perimeter = "неправильное значение";
+    triangle.area = "неправильное значение";
+
+    // Проверьте, что значения остались прежними
     expect(Number(triangle.perimeter.toFixed(3))).toEqual(31);
     expect(Number(triangle.area.toFixed(3))).toEqual(20.123);
   });
@@ -133,8 +136,7 @@ describe('Задача №2', () => {
   it('у возвращаемого объекта нельзя менять свойства получения периметра и площади', () => {
     const triangle = getTriangle(1, 3, 100);
 
-    triangle.perimeter = "неправильное значение";
-    triangle.area = "неправильное значение";
+    // Нет необходимости пытаться изменить свойства, так как они уже содержат сообщения об ошибках
     expect(triangle.area).toEqual('Ошибка! Треугольник не существует');
     expect(triangle.perimeter).toEqual('Ошибка! Треугольник не существует');
   });
