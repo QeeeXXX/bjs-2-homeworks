@@ -68,7 +68,7 @@ class AlarmClock {
   }
   
   clearAlarms() {
-    this.stop();
-    this.alarmCollection = [];
+    this.stop(); // Останавливаем текущий интервал
+    this.alarmCollection = []; // Полностью очищаем коллекцию звонков
   }
 }
