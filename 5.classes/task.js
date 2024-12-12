@@ -17,7 +17,7 @@ class PrintEditionItem {
   
   set state(newState) { // Сеттер для состояния
     if (newState < 0) {
-      this._state = 0;
+      this._state = 1;
     } else if (newState > 100) {
       this._state = 100;
     } else {
