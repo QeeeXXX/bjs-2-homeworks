@@ -167,44 +167,56 @@ console.log("Количество книг после возврата: " + libr
 
 //TASK THIRD
 
-
 class Student {
-    constructor(name) {
-        this.name = name;
-        this.marks = {};
+  constructor(name) {
+    this.name = name;
+    this.marks = {}; // Хранение оценок по предметам в виде объектов
+  }
+
+  addMark(mark, subject) {
+    if (mark < 2 || mark > 5) {
+      console.error(`Оценка ${mark} вне допустимого диапазона (2-5).`);
+      return;
     }
 
-    addMark(mark, subject) {
-        if (mark < 2 || mark > 5) {
-            console.error(`Неверная оценка ${mark}. Оценка должна быть в диапазоне от 2 до 5.`);
-            return;
-        }
-        
-        if (!this.marks.hasOwnProperty(subject)) {
-            this.marks[subject] = [];
-        }
-        
-        this.marks[subject].push(mark);
+    if (!this.marks.hasOwnProperty(subject)) {
+      this.marks[subject] = []; // Создаём массив для нового предмета
     }
 
-    getAverageBySubject(subject) {
-        if (!this.marks.hasOwnProperty(subject)) {
-            return 0;
-        }
-        
-        let sum = this.marks[subject].reduce((acc, current) => acc + current, 0);
-        return sum / this.marks[subject].length;
+    this.marks[subject].push(mark);
+  }
+
+  getAverageBySubject(subject) {
+    if (!this.marks.hasOwnProperty(subject)) {
+      return 0;
     }
 
-    getAverage() {
-        let totalMarks = 0;
-        let subjectsCount = 0;
-        
-        for (let subject in this.marks) {
-            totalMarks += this.getAverageBySubject(subject) * this.marks[subject].length;
-            subjectsCount += this.marks[subject].length;
-        }
-        
-        return totalMarks / subjectsCount;
+    const sum = this.marks[subject].reduce((acc, cur) => acc + cur, 0);
+    return sum / this.marks[subject].length;
+  }
+
+  getAverage() {
+    let totalMarks = 0;
+    let subjectsCount = 0;
+
+    for (let subject in this.marks) {
+      totalMarks += this.getAverageBySubject(subject) * this.marks[subject].length;
+      subjectsCount += this.marks[subject].length;
     }
+
+    return totalMarks / subjectsCount;
+  }
 }
+
+// Пример использования
+const student = new Student("Олег Никифоров");
+
+student.addMark(5, "химия");
+student.addMark(5, "химия");
+student.addMark(5, "физика");
+student.addMark(4, "физика");
+student.addMark(6, "физика"); // Оценка не добавится, так как больше 5
+
+console.log(student.getAverageBySubject("физика")); // Средний балл по физике: 4.5
+console.log(student.getAverageBySubject("биология")); // 0, так как нет оценок по биологии
+console.log(student.getAverage()); // Общий средний балл: 4.75
