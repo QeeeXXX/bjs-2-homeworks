@@ -1,18 +1,20 @@
+// Задача 1 //
+
 // Базовый класс для печатных изданий
 class PrintEditionItem {
   constructor(name, releaseDate, pagesCount) {
     this.name = name;
     this.releaseDate = releaseDate;
     this.pagesCount = pagesCount;
-    this._state = 100; // инициализируем состояние
-    this.type = null; // Тип пока не задан
+    this._state = 100; // _state обозначает приватное свойство
+    this.type = null;
   }
   
-  get state() { // Геттер для состояния
+  get state() {
     return this._state;
   }
   
-  set state(newState) { // Сеттер для состояния
+  set state(newState) {
     if (newState < 0) {
       this._state = 0;
     } else if (newState > 100) {
@@ -22,11 +24,8 @@ class PrintEditionItem {
     }
   }
   
-  fix() { // Метод для улучшения состояния
+  fix() {
     this._state *= 1.5;
-    if (this._state > 100) {
-      this._state = 100;
-    }
   }
 }
 
@@ -47,7 +46,7 @@ class Book extends PrintEditionItem {
   }
 }
 
-// Книги разных жанров, наследующие от Book
+// Классы для различных типов книг
 class NovelBook extends Book {
   constructor(author, name, releaseDate, pagesCount) {
     super(author, name, releaseDate, pagesCount);
@@ -68,22 +67,26 @@ class DetectiveBook extends Book {
     this.type = 'detective';
   }
 }
-const sherlock = new PrintEditionItem("Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе", 2019, 1008);
-
-console.log(sherlock.releaseDate); // 2019
-console.log(sherlock.state);       // 100
-sherlock.fix();
-console.log(sherlock.state);       // 100 (не меняется, так как изначально было 100)
-
-const magazine = new Magazine('Forbes', 2023, 128);
-
-console.log(magazine.type);        // 'magazine'
-console.log(magazine.pagesCount);  // 128
-
-const picknick = new FantasticBook("Аркадий и Борис Стругацкие", "Пикник на обочине", 1972, 168);
-
-console.log(picknick.author);          // "Аркадий и Борис Стругацкие"
-picknick.state = 10;
-console.log(picknick.state);           // 10
-picknick.fix();
-console.log(picknick.state);           // 15
+const magazine = new Magazine('Название журнала', 2023, 64);
+console.log(magazine.type); // 'magazine'
+console.log(magazine.state); // 100
+magazine.state = 50;
+console.log(magazine.state); // 50
+magazine.fix();
+console.log(magazine.state); // 75
+const book = new Book('Автор книги', 'Название книги', 2000, 320);
+console.log(book.type); // 'book'
+console.log(book.author); // 'Автор книги'
+console.log(book.state); // 100
+book.state = 80;
+console.log(book.state); // 80
+book.fix();
+console.log(book.state); // 120 (округляется до 100)
+const fantasticBook = new FantasticBook('Автор', 'Фантастическая книга', 1995, 256);
+console.log(fantasticBook.type); // 'fantastic'
+console.log(fantasticBook.author); // 'Автор'
+console.log(fantasticBook.state); // 100
+fantasticBook.state = 90;
+console.log(fantasticBook.state); // 90
+fantasticBook.fix();
+console.log(fantasticBook.state); // 135 (округляется до 100)
