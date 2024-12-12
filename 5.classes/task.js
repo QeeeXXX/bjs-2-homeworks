@@ -92,37 +92,12 @@ picknick.fix();
 console.log(picknick.state);           // 15
 
   //TASK SECOND
+import { Library } from './library.js';
+import { Magazine } from './magazine.js';
+import { NovelBook } from './novel-book.js';
+import { FantasticBook } from './fantastic-book.js';
+import { DetectiveBook } from './detective-book.js';
 
-// Класс библиотеки
-class Library {
-  constructor(name) {
-    this.name = name;
-    this.books = [];
-  }
-
-  addBook(book) {
-    if (book.state >= 30) {
-      this.books.push(book);
-    }
-  }
-
-  findBookBy(key, value) {
-    for (let book of this.books) {
-      if (book[key] === value) {
-        return book;
-      }
-    }
-    return null;
-  }
-
-  giveBookByName(bookName) {
-    const index = this.books.findIndex((book) => book.name === bookName);
-    if (index !== -1) {
-      return this.books.splice(index, 1)[0];
-    }
-    return null;
-  }
-}
 // Создание библиотеки
 const library = new Library("Библиотека имени Ленина");
 
@@ -160,6 +135,10 @@ const borrowedBook = library.giveBookByName("Пикник на обочине");
 borrowedBook.state = 20;
 borrowedBook.fix(); // Восстановление книги
 console.log(borrowedBook.state); // 30
+
+// Попытка вернуть книгу в библиотеку
+library.addBook(borrowedBook);
+console.log("Количество книг после возврата: " + library.books.length); // Количество книг после возврата: 3
 
 // Попытка вернуть книгу в библиотеку
 library.addBook(borrowedBook);
