@@ -1,5 +1,4 @@
 // Задача 1 //
-
 // Функция для парсинга числа
 function parseCount(value) {
   const result = Number.parseFloat(value);
