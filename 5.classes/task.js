@@ -25,8 +25,7 @@ class PrintEditionItem {
   }
   
   fix() {
-    const newState = this._state * 1.5;
-    this._state = Math.min(newState, 100); // Ограничиваем значение до 100
+    this._state = Math.min(this._state * 1.5, 100); // Прямо ограничиваем значение до 100
   }
 }
 
