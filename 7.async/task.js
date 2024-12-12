@@ -67,8 +67,12 @@ class AlarmClock {
     });
   }
   
- clearAlarms() {
-    this.stop(); // Останавливаем текущий интервал
-    this.alarmCollection.length = 0; // Полностью очищаем коллекцию звонков
+  clearAlarms() {
+    try {
+      this.stop(); // Останавливаем текущий интервал
+      this.alarmCollection = []; // Полностью очищаем коллекцию звонков
+    } catch (error) {
+      console.error('Ошибка при очистке звонков:', error);
+    }
   }
 }
