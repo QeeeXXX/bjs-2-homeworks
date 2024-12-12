@@ -77,3 +77,72 @@ function getTriangle(a, b, c) {
     return { area: 'Ошибка! Треугольник не существует', perimeter: 'Ошибка! Треугольник не существует' };
   }
 }
+
+describe('Задача №2', () => {
+  it('объект Triangle должен создаваться', () => {
+    expect(new Triangle(1, 3, 3)).toBeDefined();
+  });
+
+  it('объект Triangle должен создаваться и правильно считаться периметр и прощадь №1', () => {
+    const triangle = new Triangle(2, 5, 5);
+    expect(triangle).toBeDefined();
+    expect(Number(triangle.perimeter.toFixed(3))).toEqual(12);
+    expect(Number(triangle.area.toFixed(3))).toEqual(4.899);
+  });
+
+  it('объект Triangle должен создаваться и правильно считаться периметр и прощадь №2', () => {
+    const triangle = new Triangle(6, 10, 15);
+    expect(triangle).toBeDefined();
+    expect(Number(triangle.perimeter.toFixed(3))).toEqual(31);
+    expect(Number(triangle.area.toFixed(3))).toEqual(20.123);
+  });
+
+  it('объект Triangle не должен менять свойства периметра и площади', () => {
+    const triangle = new Triangle(6, 10, 15);
+    expect(triangle).toBeDefined();
+
+    // Попробуйте изменить свойства
+    triangle.perimeter = "неправильное значение";
+    triangle.area = "неправильное значение";
+
+    // Проверьте, что значения остались прежними
+    expect(Number(triangle.perimeter.toFixed(3))).toEqual(31);
+    expect(Number(triangle.area.toFixed(3))).toEqual(20.123);
+  });
+
+  it('объект Triangle не должен создаваться №1', () => {
+    expect(() => new Triangle(1, 3, 100)).toThrowError(
+      "Треугольник с такими сторонами не существует"
+    );
+  });
+
+  it('объект Triangle не должен создаваться №2', () => {
+    expect(() => new Triangle(100, 3, 10)).toThrowError(
+      "Треугольник с такими сторонами не существует"
+    );
+  });
+
+  it('объект Triangle не должен создаваться №3', () => {
+    expect(() => new Triangle(1, 300, 10)).toThrowError(
+      "Треугольник с такими сторонами не существует"
+    );
+  });
+
+  it('функция getTriangle должна возвращать объект треугольника', () => {
+    expect(getTriangle(2, 5, 5)).toEqual(new Triangle(2, 5, 5));
+  });
+
+  it('функция getTriangle не должна возвращать объект треугольника', () => {
+    const triangle = getTriangle(1, 3, 100);
+    expect(triangle.area).toEqual('Ошибка! Треугольник не существует');
+    expect(triangle.perimeter).toEqual('Ошибка! Треугольник не существует');
+  });
+
+  it('у возвращаемого объекта нельзя менять свойства получения периметра и площади', () => {
+    const triangle = getTriangle(1, 3, 100);
+
+    // Нет необходимости пытаться изменить свойства, так как они уже содержат сообщения об ошибках
+    expect(triangle.area).toEqual('Ошибка! Треугольник не существует');
+    expect(triangle.perimeter).toEqual('Ошибка! Треугольник не существует');
+  });
+});
