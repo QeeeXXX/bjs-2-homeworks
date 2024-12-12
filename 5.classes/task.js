@@ -6,14 +6,14 @@ class PrintEditionItem {
     this.name = name;
     this.releaseDate = releaseDate;
     this.pagesCount = pagesCount;
-    this._state = 100; // _state обозначает приватное свойство
+    this._state = 100; // начальное состояние издания
     this.type = null;
   }
-  
+
   get state() {
     return this._state;
   }
-  
+
   set state(newState) {
     if (newState < 0) {
       this._state = 0;
@@ -23,9 +23,9 @@ class PrintEditionItem {
       this._state = newState;
     }
   }
-  
+
   fix() {
-    this._state = Math.min(this._state * 1.5, 100); // Прямо ограничиваем значение до 100
+    this._state = Math.min(this._state * 1.5, 100); // увеличение состояния с учётом ограничения
   }
 }
 
@@ -67,26 +67,11 @@ class DetectiveBook extends Book {
     this.type = 'detective';
   }
 }
-const magazine = new Magazine('Название журнала', 2023, 64);
-console.log(magazine.type); // 'magazine'
-console.log(magazine.state); // 100
-magazine.state = 50;
-console.log(magazine.state); // 50
-magazine.fix();
-console.log(magazine.state); // 75
-const book = new Book('Автор книги', 'Название книги', 2000, 320);
-console.log(book.type); // 'book'
-console.log(book.author); // 'Автор книги'
-console.log(book.state); // 100
-book.state = 80;
-console.log(book.state); // 80
-book.fix();
-console.log(book.state); // 120 (округляется до 100)
-const fantasticBook = new FantasticBook('Автор', 'Фантастическая книга', 1995, 256);
-console.log(fantasticBook.type); // 'fantastic'
-console.log(fantasticBook.author); // 'Автор'
-console.log(fantasticBook.state); // 100
-fantasticBook.state = 90;
-console.log(fantasticBook.state); // 90
-fantasticBook.fix();
-console.log(fantasticBook.state); // 135 (округляется до 100)
+
+// Пример использования
+const detectiveBook = new DetectiveBook('Агата Кристи', 'Убийство в Восточном экспрессе', 1934, 240);
+console.log(detectiveBook.state); // 100
+detectiveBook.state = 60;
+console.log(detectiveBook.state); // 60
+detectiveBook.fix();
+console.log(detectiveBook.state); // 90
