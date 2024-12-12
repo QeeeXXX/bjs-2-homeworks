@@ -1,6 +1,3 @@
-//Task FIRST
-
-// Базовый класс PrintEditionItem
 // Базовый класс для печатных изданий
 class PrintEditionItem {
   constructor(name, releaseDate, pagesCount) {
@@ -90,56 +87,3 @@ picknick.state = 10;
 console.log(picknick.state);           // 10
 picknick.fix();
 console.log(picknick.state);           // 15
-
-  //TASK SECOND
-import { Library } from './library.js';
-import { Magazine } from './magazine.js';
-import { NovelBook } from './novel-book.js';
-import { FantasticBook } from './fantastic-book.js';
-import { DetectiveBook } from './detective-book.js';
-
-// Создание библиотеки
-const library = new Library("Библиотека имени Ленина");
-
-// Добавление книг в библиотеку
-library.addBook(
-  new DetectiveBook(
-    "Артур Конан Дойл",
-    "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
-    2019,
-    1008
-  )
-);
-library.addBook(
-  new FantasticBook(
-    "Аркадий и Борис Стругацкие",
-    "Пикник на обочине",
-    1972,
-    168
-  )
-);
-library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
-library.addBook(new Magazine("Мурзилка", 1924, 60));
-
-// Поиск книги
-console.log(library.findBookBy("name", "Властелин колец")); // null
-console.log(library.findBookBy("releaseDate", 1924).name); // "Мурзилка"
-
-// Выдача книги
-console.log("Количество книг до выдачи: " + library.books.length); // Количество книг до выдачи: 4
-library.giveBookByName("Машина времени");
-console.log("Количество книг после выдачи: " + library.books.length); // Количество книг после выдачи: 3
-
-// Повреждение и восстановление книги
-const borrowedBook = library.giveBookByName("Пикник на обочине");
-borrowedBook.state = 20;
-borrowedBook.fix(); // Восстановление книги
-console.log(borrowedBook.state); // 30
-
-// Попытка вернуть книгу в библиотеку
-library.addBook(borrowedBook);
-console.log("Количество книг после возврата: " + library.books.length); // Количество книг после возврата: 3
-
-// Попытка вернуть книгу в библиотеку
-library.addBook(borrowedBook);
-console.log("Количество книг после возврата: " + library.books.length); // Количество книг после возврата: 3
