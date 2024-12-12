@@ -47,7 +47,7 @@ describe('Домашнее задание к лекции «Обработка �
 
 // Задача 2 //
 
-class Triangle {
+export class Triangle {
   constructor(a, b, c) {
     if (!this.isValidTriangle(a, b, c)) {
       throw new Error("Треугольник с такими сторонами не существует");
@@ -78,7 +78,7 @@ class Triangle {
   }
 }
 
-function getTriangle(a, b, c) {
+export function getTriangle(a, b, c) {
   try {
     return new Triangle(a, b, c);
   } catch (error) {
