@@ -21,7 +21,6 @@ function validateCount(value) {
         return error;
     }
 }
-
 // Задача 2 //
 
 class Triangle {
