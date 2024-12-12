@@ -18,13 +18,9 @@ function validateCount(value) {
         return parseCount(value);
     } catch (error) {
         // Если произошла ошибка при парсинге, возвращаем её
-        return error.message;
+        return error;
     }
-}﻿
-console.log(validateCount("10"));      // Вернёт 10
-console.log(validateCount("abc"));     // Вернёт 'Невалидное значение'
-console.log(validateCount("12.34"));   // Вернёт 12.34
-console.log(validateCount(null));      // Вернёт 'Невалидное значение'
+}
 
 // Задача 2 //
 
