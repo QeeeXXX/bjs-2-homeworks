@@ -19,14 +19,7 @@ class AlarmClock {
       throw new Error('Отсутствуют обязательные аргументы');
     }
 
-    // Проверка на наличие звонка в коллекции с таким же временем
-    const existingAlarm = this.alarmCollection.find(alarm => alarm.time === time);
-    if (existingAlarm) {
-      console.warn('Уже присутствует звонок на это же время');
-      return;
-    }
-
-    // Добавление звонка в коллекцию
+    // Добавляем звонок в коллекцию без проверок на уникальность
     this.alarmCollection.push({
       time,
       callback,
@@ -76,7 +69,11 @@ class AlarmClock {
 
   // Метод для очистки всех звонков и остановки будильника
   clearAlarms() {
-    this.stop();  // Останавливаем интервал
-    this.alarmCollection = [];  // Очищаем коллекцию звонков
+    try {
+      this.stop();  // Останавливаем интервал
+      this.alarmCollection = [];  // Очищаем коллекцию звонков
+    } catch (error) {
+      console.error('Ошибка при очистке звонков:', error);
+    }
   }
 }
