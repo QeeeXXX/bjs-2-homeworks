@@ -1,78 +1,82 @@
 class AlarmClock {
   constructor() {
-    // Коллекция звонков
-    this.alarmCollection = [];
-    
-    // Id интервала
-    this.intervalId = null;
+    this.alarmCollection = [];  // Коллекция звонков
+    this.intervalId = null;     // id таймера
   }
-  
+
+  // Метод для получения текущего времени в формате HH:MM
+  getCurrentFormattedTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
+
+  // Метод для добавления нового звонка
   addClock(time, callback) {
+    // Проверка на обязательные аргументы
     if (!time || !callback) {
       throw new Error('Отсутствуют обязательные аргументы');
     }
-    
-    const existingAlarm = this.alarmCollection.find((alarm) => alarm.time === time);
-    
+
+    // Проверка на наличие звонка в коллекции с таким же временем
+    const existingAlarm = this.alarmCollection.find(alarm => alarm.time === time);
     if (existingAlarm) {
       console.warn('Уже присутствует звонок на это же время');
       return;
     }
-    
+
+    // Добавление звонка в коллекцию
     this.alarmCollection.push({
       time,
       callback,
       canCall: true
     });
   }
-  
+
+  // Метод для удаления звонков по времени
   removeClock(time) {
-    this.alarmCollection = this.alarmCollection.filter((alarm) => alarm.time !== time);
+    this.alarmCollection = this.alarmCollection.filter(alarm => alarm.time !== time);
   }
-  
-  getCurrentFormattedTime() {
-    const now = new Date();
-    let hours = now.getHours().toString().padStart(2, '0'); // Форматируем часы до двух цифр
-    let minutes = now.getMinutes().toString().padStart(2, '0'); // Форматируем минуты до двух цифр
-    return `${hours}:${minutes}`;
-  }
-  
+
+  // Метод для старта будильника
   start() {
-    if (this.intervalId) {
-      return;
+    if (this.intervalId !== null) {
+      return;  // Если интервал уже существует, ничего не делаем
     }
-    
+
+    // Создание интервала для запуска будильника каждую секунду
     this.intervalId = setInterval(() => {
       const currentTime = this.getCurrentFormattedTime();
-      
-      this.alarmCollection.forEach((alarm) => {
-        if (currentTime === alarm.time && alarm.canCall) {
-          alarm.callback(); // Выполняем коллбек
-          alarm.canCall = false; // Запрещаем повторный вызов
+
+      // Перебор всех звонков
+      this.alarmCollection.forEach(alarm => {
+        if (alarm.time === currentTime && alarm.canCall) {
+          alarm.canCall = false;  // Не запускать снова
+          alarm.callback();       // Вызов коллбека
         }
       });
-    }, 1000); // Интервал каждые 1000 мс (каждую секунду)
+    }, 1000);  // Периодичность — 1 секунда
   }
-  
+
+  // Метод для остановки будильника
   stop() {
-    if (this.intervalId) {
+    if (this.intervalId !== null) {
       clearInterval(this.intervalId);
-      this.intervalId = null;
+      this.intervalId = null;  // Сброс значения intervalId
     }
   }
-  
+
+  // Метод для сброса всех звонков (сделать их снова доступными для вызова)
   resetAllCalls() {
-    this.alarmCollection.forEach((alarm) => {
+    this.alarmCollection.forEach(alarm => {
       alarm.canCall = true;
     });
   }
-  
+
+  // Метод для очистки всех звонков и остановки будильника
   clearAlarms() {
-    try {
-      this.stop(); // Останавливаем текущий интервал
-      this.alarmCollection = []; // Полностью очищаем коллекцию звонков
-    } catch (error) {
-      console.error('Ошибка при очистке звонков:', error);
-    }
+    this.stop();  // Останавливаем интервал
+    this.alarmCollection = [];  // Очищаем коллекцию звонков
   }
 }
